@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Row } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 
 export default function Film(props) {
     let [isHover, setIsHover] = useState(false)
-    let [youtubeLink,setYoutubeLink]=useState(false)
+    let [youtubeLink,setYoutubeLink]=useState(null)
     const [show, setShow] = useState(false);
-    let urlYoutube = ''
     const showInfo = () => {
         setIsHover(true)
     }
@@ -18,17 +17,21 @@ export default function Film(props) {
         let url = `https://api.themoviedb.org/3/movie/${props.movie.id}?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&append_to_response=videos`
         let respone = await fetch(url)
         let data = await respone.json()
+        console.log('data:',data)
         if (data.videos.results.length > 0) {
-            setYoutubeLink(data.videos.results[0].key)
+            setYoutubeLink(`https://www.youtube.com/embed/${data.videos.results[0].key}`)
         }
-        urlYoutube = `https://www.youtube.com/watch?v=${youtubeLink}`
 
     }
+
+    useEffect(() => {
+        callApiGetVideo()  
+    }, [])
 
     if (!isHover) {
         return (
             <div >
-                <Card style={{ borderRadius: "20px", }} onMouseOver={showInfo} onMouseLeave={hideInfo} onClick={() => setShow(true)} onClick={()=>callApiGetVideo(true)} >
+                <Card style={{ borderRadius: "20px", }} onMouseOver={showInfo} onMouseLeave={hideInfo} onClick={() => setShow(true)} >
                     <Card.Img style={{ borderRadius: "20px", }} src={`https://image.tmdb.org/t/p/w220_and_h330_face/${props.movie.poster_path}`} alt="Card image" />
 
                 </Card>
@@ -39,14 +42,14 @@ export default function Film(props) {
                     aria-labelledby="example-custom-modal-styling-title"
                     
                 >
-                    <Modal.Header closeButton style={{backgroundColor:"black"}}>
+                    <Modal.Header closeButton style={{backgroundImage: "linear-gradient(to right, #0c7b47, #289154, #3ea762, #54bd6f, #6ad47c)",}}>
                         <Modal.Title style={{color:"white"}} id="example-custom-modal-styling-title">
                         {props.movie.title}
                     </Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{heigt:"600px",}}>
                         <p>
-                        <iframe src={urlYoutube} width="540" height="450" title="fx." ></iframe>
+                        <iframe src={youtubeLink} width="540" height="450" title="fx." ></iframe>
                         </p>
                     </Modal.Body>
                 </Modal>

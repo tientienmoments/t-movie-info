@@ -12,19 +12,21 @@ import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 // import { MDBBtn } from "mdbreact"; 
 
 //individual
+
 import NowPlaying from './components/NowPlaying'
 import Popular from './components/Popular'
-
+// import Trending from './components/Trending'
 import ShowResults from './components/ShowResults'
-import LastTrailer from './components/LastTrailer'
+// import LastTrailer from './components/LastTrailer'
 
 
 function App() {
   let [nowList, setMovieList] = useState(null)
   let [popularList, setPopularList] = useState(null)
+  // let [trendingList,setTrendingList] = useState(null)
   let [searchByKey, setSearchByKey] = useState([])
   let [hide, setHide] = useState(true)
-  let [lastTrailer,setLastTrailer]=useState(null)
+  // let [lastTrailer,setLastTrailer]=useState(null)
 
 
   const callMovieNowPlaying = async () => {
@@ -35,7 +37,7 @@ function App() {
     console.log("data", data)
 
     setMovieList(data.results)
-    
+
   }
   const callPopularMovie = async () => {
     let url = `https://api.themoviedb.org/3/movie/popular?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&page=1`
@@ -47,16 +49,25 @@ function App() {
     setPopularList(data.results)
 
   }
-  const callLastedTrailer = async () => {
-    let url = `https://api.themoviedb.org/3/movie/157336?api_key=0fe0cfcc2a26aafa851117e003638b00&append_to_response=videos`
-    console.log(url)
-    let result = await fetch(url)
-    let data = await result.json()
-    console.log("data", data)
+  // const callTrending = async () => {
+  //   let url = `https://api.themoviedb.org/3/trending/all/day?api_key=0fe0cfcc2a26aafa851117e003638b00`
+  //   console.log(url)
+  //   let result = await fetch(url)
+  //   let data = await result.json()
+  //   console.log("data", data)
+  //   setTrendingList(data.results)
+  // }
 
-    setLastTrailer(data.results)
+  // const callLastedTrailer = async () => {
+  //   let url = `https://api.themoviedb.org/3/movie/upcoming?api_key=0fe0cfcc2a26aafa851117e003638b00&append_to_response=videos`
+  //   console.log(url)
+  //   let result = await fetch(url)
+  //   let data = await result.json()
+  //   console.log("data", data)
 
-  }
+  //   setLastTrailer(data.results)
+
+  // }
 
   ///////them chuc nang search key words
   const Search = (whichMovie) => {
@@ -88,7 +99,8 @@ function App() {
   useEffect(() => {
     callMovieNowPlaying()
     callPopularMovie()
-    callLastedTrailer()
+    // callTrending()
+    // callLastedTrailer()
   }, [])
 
   if (nowList == null || popularList == null) {
@@ -104,13 +116,13 @@ function App() {
 
 
         <Navbar collapseOnSelect expand="lg" style={{ border: "1px solid red", width: "100%", position: "absolute", backgroundColor: "#00C2A8", }}>
-          <Navbar.Brand href="#home" style={{fontSize:"30px",color:"white",paddingLeft:"30px",}}>film.info</Navbar.Brand>
+          <Navbar.Brand href="#home" style={{ fontSize: "30px", color: "white", paddingLeft: "30px", }}>film.info</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
               <ButtonGroup className="mr-2" aria-label="First group">
-                <Button variant="info" ><Nav.Link href="#movies" style={{color:"white",}}>Movies</Nav.Link></Button>{' '}
-                <Button variant="info" ><Nav.Link href="#tvshow" style={{color:"white",}}>Tv Shows</Nav.Link></Button>{' '}
+                <Button variant="info" ><Nav.Link href="#movies" style={{ color: "white", }}>Movies</Nav.Link></Button>{' '}
+                <Button variant="info" ><Nav.Link href="#tvshow" style={{ color: "white", }}>Tv Shows</Nav.Link></Button>{' '}
                 <Button variant="info" >
                   <NavDropdown title="More" id="collasible-nav-dropdown" >
                     <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -123,10 +135,10 @@ function App() {
 
               </ButtonGroup>
             </Nav>
-            <Nav style={{paddingRight:"150px",}}>
+            <Nav style={{ paddingRight: "150px", }}>
               <ButtonGroup >
-                <Button variant="info"><Nav.Link href="#deets" style={{color:"white",}}>Login</Nav.Link></Button>{' '}
-                <Button variant="info"><Nav.Link href="#pricing" style={{color:"white",}}>About Us</Nav.Link></Button>{' '}
+                <Button variant="info"><Nav.Link href="#deets" style={{ color: "white", }}>Login</Nav.Link></Button>{' '}
+                <Button variant="info"><Nav.Link href="#pricing" style={{ color: "white", }}>About Us</Nav.Link></Button>{' '}
               </ButtonGroup>
 
             </Nav>
@@ -173,6 +185,11 @@ function App() {
         <Row style={{ border: "1px solid red", width: "100%" }}>
           <Popular popular={popularList} />
         </Row>
+        <Row style={{ border: "1px solid red", width: "100%" }}>
+          {/* <Trending trendList={trendingList} /> */}
+        </Row>
+
+
         <Row style={{ border: "1px solid red", width: "100%" }} >
           <h3 className="title-style" hidden={hide}>Search results</h3>
         </Row>
@@ -182,7 +199,7 @@ function App() {
 
         <Row style={{ border: "1px solid red", width: "100%" }}>
 
-        <LastTrailer callTrailer={lastTrailer}/>
+          {/* <LastTrailer callTrailer={lastTrailer}/> */}
         </Row>
 
       </Container>

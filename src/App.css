@@ -26,19 +26,43 @@
 .row-style {
 display: flex;
 flex-direction: row;
-margin-bottom: 40px;
+/* margin-bottom: 40px; */
 overflow: scroll;
-height:320px;
-width: 1117px;  
+height:350px;
+width: 1117px; 
+ margin:5px;
 }
 .film-style {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
 }
 .title-style {
   align-items: flex-start !important ;
   color:white !important ;
+  
 
 }
+.card{
+  width:200px;
+  transition: 0.5s ease-in;
+  
+}
+
+.card:hover{
+  transform: translate(-40%,10%) scale(1.15);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+  
+  
+}
+.detail-style{
+display: flex;
+flex-direction: column;
+overflow: scroll;
+height:150px;
+}
+

@@ -5,17 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, } from 'react-bootstrap'
 import { Jumbotron, Button, InputGroup, FormControl, ButtonGroup } from 'react-bootstrap'
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
-//MDB
-// import '@fortawesome/fontawesome-free/css/all.min.css';
-// import 'bootstrap-css-only/css/bootstrap.min.css';
-// import 'mdbreact/dist/css/mdb.css';
-// import { MDBBtn } from "mdbreact"; 
+
 
 //individual
 
 import NowPlaying from './components/NowPlaying'
 import Popular from './components/Popular'
-// import Trending from './components/Trending'
+import Trending from './components/Trending'
 import ShowResults from './components/ShowResults'
 // import LastTrailer from './components/LastTrailer'
 
@@ -23,7 +19,7 @@ import ShowResults from './components/ShowResults'
 function App() {
   let [nowList, setMovieList] = useState(null)
   let [popularList, setPopularList] = useState(null)
-  // let [trendingList,setTrendingList] = useState(null)
+  let [trendingList,setTrendingList] = useState(null)
   let [searchByKey, setSearchByKey] = useState([])
   let [hide, setHide] = useState(true)
   // let [lastTrailer,setLastTrailer]=useState(null)
@@ -49,17 +45,17 @@ function App() {
     setPopularList(data.results)
 
   }
-  // const callTrending = async () => {
-  //   let url = `https://api.themoviedb.org/3/trending/all/day?api_key=0fe0cfcc2a26aafa851117e003638b00`
-  //   console.log(url)
-  //   let result = await fetch(url)
-  //   let data = await result.json()
-  //   console.log("data", data)
-  //   setTrendingList(data.results)
-  // }
+  const callTrending = async () => {
+    let url = `https://api.themoviedb.org/3/trending/movie/day?api_key=0fe0cfcc2a26aafa851117e003638b00`
+    console.log(url)
+    let result = await fetch(url)
+    let data = await result.json()
+    console.log("data", data)
+    setTrendingList(data.results)
+  }
 
   // const callLastedTrailer = async () => {
-  //   let url = `https://api.themoviedb.org/3/movie/upcoming?api_key=0fe0cfcc2a26aafa851117e003638b00&append_to_response=videos`
+  //   let url = `https://api.themoviedb.org/3/movie/${movie_id}?api_key=0fe0cfcc2a26aafa851117e003638b00&append_to_response=videos`
   //   console.log(url)
   //   let result = await fetch(url)
   //   let data = await result.json()
@@ -99,11 +95,11 @@ function App() {
   useEffect(() => {
     callMovieNowPlaying()
     callPopularMovie()
-    // callTrending()
+    callTrending()
     // callLastedTrailer()
   }, [])
 
-  if (nowList == null || popularList == null) {
+  if (nowList == null || popularList == null || trendingList == null  ) {
     return (
       <h2> Loading...</h2>
     )
@@ -171,27 +167,34 @@ function App() {
           </Jumbotron>
         </Row>
 
-        <Row style={{ border: "1px solid red", width: "100%" }}>
-          <h3 className="title-style">Now Playing</h3>
+        <Row style={{ border: "1px solid red", width: "100%",marginBottom:"20px",marginTop:"20px", }}>
+          
+          <Button variant="outline-info" style={{color:"white",fontSize:"20px", fontWeight:"bolder", border:"1px solid white",}}>Now Playing</Button>
         </Row>
 
-        <Row style={{ border: "1px solid red", width: "100%" }}>
+        <Row style={{ border: "1px solid red", width: "100%", }}>
           <NowPlaying nowPlaying={nowList} />
         </Row>
-        <Row style={{ border: "1px solid red", width: "100%" }}>
-          <h3 className="title-style">Popular</h3>
+        <Row style={{ border: "1px solid red", width: "100%",marginBottom:"20px",marginTop:"20px", }}>
+          
+          <Button variant="outline-info" style={{color:"white",fontSize:"20px", fontWeight:"bolder", border:"1px solid white",}}>Popular</Button>
         </Row>
 
         <Row style={{ border: "1px solid red", width: "100%" }}>
           <Popular popular={popularList} />
         </Row>
+        <Row style={{ border: "1px solid red", width: "100%",marginBottom:"20px",marginTop:"20px", }}>
+        <Button variant="outline-info" style={{color:"white",fontSize:"20px", fontWeight:"bolder", border:"1px solid white",}}>Today's Trending </Button>
+          
+        </Row>
         <Row style={{ border: "1px solid red", width: "100%" }}>
-          {/* <Trending trendList={trendingList} /> */}
+          <Trending trending={trendingList} />
         </Row>
 
 
-        <Row style={{ border: "1px solid red", width: "100%" }} >
-          <h3 className="title-style" hidden={hide}>Search results</h3>
+        <Row style={{ border: "1px solid red", width: "100%",marginBottom:"20px",marginTop:"20px", }} >
+          {/* <h3 className="title-style" hidden={hide}>Search results</h3> */}
+          <Button variant="outline-info" hidden={hide} style={{color:"white",fontSize:"20px", fontWeight:"bolder", border:"1px solid white",}}>Search results</Button>
         </Row>
         <Row style={{ border: "1px solid red", width: "100%" }}>
           <ShowResults resultKeyWord={searchByKey} />

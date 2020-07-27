@@ -18,6 +18,8 @@ import PopularityList from './components/PopularityList';
 
 
 function App() {
+let [pageNumber,setPageNumber]=useState(1)
+
   let [nowList, setMovieList] = useState(null)
   let [popularList, setPopularList] = useState(null)
   let [trendingList, setTrendingList] = useState(null)
@@ -110,6 +112,11 @@ const callPopuMovieDesc = async () => {
 // setPopularityList([...sortedList])
 
 // }
+useEffect(() => {
+  // alert(pageNumber)
+
+  setCallPopu()
+}, [pageNumber]);
 
 
   useEffect(() => {
@@ -222,7 +229,7 @@ const callPopuMovieDesc = async () => {
 
 
         <Row hidden={hide}>
-        <PopularityList  popularity={callPopu}/>
+        <PopularityList popularity={callPopu} setPageNumber={setPageNumber} />
         </Row>
         
 

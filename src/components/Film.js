@@ -25,9 +25,12 @@ export default function Film(props) {
         if (data.videos.results.length > 0) {
             setYoutubeLink(`https://www.youtube.com/embed/${data.videos.results[0].key}`)
         }
+        
         if (data.genres.length >0){
-            setGenres(data.genres[0].name)
+            setGenres(data.genres.map (item => <div className="badge badge-success m-2"> {item.name} </div>))
+            
         }
+
         setRuntime(data.runtime)
         setHomePage(data.homepage)
         

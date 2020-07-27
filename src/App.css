@@ -37,6 +37,7 @@ width: 1117px;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  width: 1117px;
 }
 .title-style {
   align-items: flex-start !important ;
@@ -47,6 +48,8 @@ width: 1117px;
 .card{
   width:200px;
   transition: 0.5s ease-in;
+  margin-right: 5px;
+  margin-left: 5px;
   
 }
 

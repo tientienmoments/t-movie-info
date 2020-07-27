@@ -23,7 +23,8 @@ function App() {
   let [trendingList, setTrendingList] = useState(null)
   let [searchByKey, setSearchByKey] = useState([])
   let [hide, setHide] = useState(true)
-  let [popularityList,setPopularityList]=useState(null)
+  let [callPopu,setCallPopu]=useState(null)
+  // let [popularityList,setPopularityList]=useState(null)
   
 
 
@@ -86,28 +87,40 @@ function App() {
   }
 
 // list by popularity
-const searchByPopularity =(direction) => {
-let sortedList;
-if (direction === "asc") {
-  sortedList = nowList.sort((a,b)=> a.popularity -b.popularity)
-}else{
-  sortedList=nowList.sort((a,b)=>b.popularity - a.popularity)
+const callPopuMovieDesc = async () => {
+  let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
+  console.log(url)
+  let result = await fetch(url)
+  let data = await result.json()
+  console.log("data", data)
+  setCallPopu(data.results)
+  setHide(true)
 }
-console.log ("sort",sortedList)
-setPopularityList([...sortedList])
 
-}
+
+
+// const searchByPopularity =(direction) => {
+// let sortedList;
+// if (direction === "asc") {
+//   sortedList = callPopu.sort((a,b)=> a.popularity -b.popularity)
+// }else{
+//   sortedList=callPopu.sort((a,b)=>b.popularity - a.popularity)
+// }
+// console.log ("sort",sortedList)
+// setPopularityList([...sortedList])
+
+// }
 
 
   useEffect(() => {
     callMovieNowPlaying()
     callPopularMovie()
     callTrending()
-    
+    callPopuMovieDesc()
    
   }, [])
 
-  if (nowList == null || popularList == null || trendingList == null ) {
+  if (nowList == null || popularList == null || trendingList == null ||callPopu==null ) {
     return (
       <h2> Loading...</h2>
     )
@@ -131,8 +144,8 @@ setPopularityList([...sortedList])
                   <NavDropdown title="Sort By" id="collasible-nav-dropdown" >
                     <NavDropdown.Item href="#action/3.1">Rate h-l</NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.2">Rate l-h</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3" onClick={()=> searchByPopularity("desc")} >Popularity h-l</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.4" onClick={()=> searchByPopularity("asc")} >Popularity l-h</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.3" onClick={()=>setHide(false)} >Popularity h-l</NavDropdown.Item>
+                    {/* <NavDropdown.Item href="#action/3.4" onClick={()=> searchByPopularity("asc")} >Popularity l-h</NavDropdown.Item> */}
                   </NavDropdown>
                 </Button>{' '}
 
@@ -150,7 +163,7 @@ setPopularityList([...sortedList])
         </Navbar>
 
 
-        <div >
+        <div hidden={!hide} >
           <Row style={{ width: "100%" }}>
             <Jumbotron >
               <h1 style={{ fontSize: '30px', paddingTop: "50px", }}>Welcome.</h1>
@@ -208,8 +221,8 @@ setPopularityList([...sortedList])
         </Row>
 
 
-        <Row>
-        <PopularityList popularity={popularityList}/>
+        <Row hidden={hide}>
+        <PopularityList  popularity={callPopu}/>
         </Row>
         
 

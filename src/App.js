@@ -59,7 +59,7 @@ function App() {
   
 
   /////them chuc nang search key words
-  const Search = (whichMovie) => {
+  const Search = () => {
     if (document.getElementById("input").value === '') {
       alert("You need to enter Movie name")
     } else {

@@ -5,7 +5,7 @@ import Film from './Film'
 
 export default function PopularityList(props) {
     
-    if (!props.popularity) return <div>Loading</div>
+    if (!props.popularity) return <div></div>
     return (
 
         <div className="row-style">

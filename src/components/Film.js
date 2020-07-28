@@ -24,6 +24,8 @@ export default function Film(props) {
         console.log('data:', data)
         if (data.videos.results.length > 0) {
             setYoutubeLink(`https://www.youtube.com/embed/${data.videos.results[0].key}`)
+
+            
         }
         
         if (data.genres.length >0){
@@ -63,7 +65,11 @@ export default function Film(props) {
                     <Modal.Body style={{ heigt: "600px", backgroundColor:"#cefbe3" }}>
                         <Container>
                             <Row>
-                                <Col><iframe src={youtubeLink} width="540" height="450" title="fx." ></iframe></Col>
+                                <Col>
+                                
+                                <iframe width="520" height="315" src={youtubeLink} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                
+                                </Col>
                                 <Col>
                                     <span style={{fontWeight:"bolder", fontSize:"20px", textDecoration:"underline"}}>The Synopsis:</span><br></br>
                                     <span style={{fontSize:"20px"}}>{props.movie.overview}</span><br></br>

@@ -4,7 +4,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, } from 'react-bootstrap'
 import { Jumbotron, Button, InputGroup, FormControl, ButtonGroup } from 'react-bootstrap'
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, } from 'react-bootstrap'
 
 
 //individual
@@ -14,19 +14,26 @@ import Popular from './components/Popular'
 import Trending from './components/Trending'
 import ShowResults from './components/ShowResults'
 import PopularityList from './components/PopularityList';
-
-
+import PopularListAsc from './components/PopularListAsc'
+import RatedListMovie from './components/RatedListMovie'
 
 function App() {
 let [pageNumber,setPageNumber]=useState(1)
-
+let [hide, setHide] = useState(true)
+// let [hideAsc,setHideAsc]=useState(true)
+// let [hideDesc,setHideDesc]=useState(true)
+let [hidePopuValue,setHidePopuValue] = useState(true)
   let [nowList, setMovieList] = useState(null)
   let [popularList, setPopularList] = useState(null)
   let [trendingList, setTrendingList] = useState(null)
   let [searchByKey, setSearchByKey] = useState([])
-  let [hide, setHide] = useState(true)
+  let [value, setValue] = useState(1)
   let [callPopu,setCallPopu]=useState(null)
+  let [callPopuAsc,setCallPopuAsc]=useState(null)
+  let [resultHide,setResultHide]=useState(true)
   // let [popularityList,setPopularityList]=useState(null)
+  let [topRated,setTopRated]=useState(null)
+  
   
 
 
@@ -69,7 +76,7 @@ let [pageNumber,setPageNumber]=useState(1)
       console.log(document.getElementById("input").value);
       let searchMovie = document.getElementById("input").value;
       callKeyWord(searchMovie)
-      setHide(false)
+      setResultHide(false)
 
     }
 
@@ -88,46 +95,63 @@ let [pageNumber,setPageNumber]=useState(1)
     setSearchByKey(data.results)
   }
 
-// list by popularity
+// list by popularity high to low
 const callPopuMovieDesc = async () => {
-  let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`
+  let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNumber}`
   console.log(url)
   let result = await fetch(url)
   let data = await result.json()
   console.log("data", data)
   setCallPopu(data.results)
-  setHide(true)
+  // setHide(true)
+  
+  // setHideAsc(true)
+}
+//list by popularity low to high
+const callPopuMovieAsc = async () => {
+  let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&sort_by=popularity.asc&include_adult=false&include_video=false&page=${pageNumber}`
+  console.log(url)
+  let result = await fetch(url)
+  let data = await result.json()
+  console.log("data", data)
+  setCallPopuAsc(data.results)
+  // setHide(true) 
+  
+  // setHideDesc(true)
+}
+//list by top rated
+const callTopRated = async()=>{
+  let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page=${pageNumber}&vote_average.gte=${value}`
+  console.log(url)
+  let result = await fetch(url)
+  let data = await result.json()
+  console.log("data", data)
+  setTopRated(data.results)
+
+  // setHide(true) 
 }
 
 
 
-// const searchByPopularity =(direction) => {
-// let sortedList;
-// if (direction === "asc") {
-//   sortedList = callPopu.sort((a,b)=> a.popularity -b.popularity)
-// }else{
-//   sortedList=callPopu.sort((a,b)=>b.popularity - a.popularity)
-// }
-// console.log ("sort",sortedList)
-// setPopularityList([...sortedList])
-
-// }
 useEffect(() => {
-  // alert(pageNumber)
+  callPopuMovieAsc()
+  callPopuMovieDesc()
+  callTopRated()
 
-  setCallPopu()
 }, [pageNumber]);
 
-
+useEffect(() => {
+ callTopRated()
+}, [value])
   useEffect(() => {
     callMovieNowPlaying()
     callPopularMovie()
     callTrending()
-    callPopuMovieDesc()
-   
+    // callPopuMovieDesc()
+    // callPopuMovieAsc()
   }, [])
 
-  if (nowList == null || popularList == null || trendingList == null ||callPopu==null ) {
+  if (nowList == null || popularList == null || trendingList == null || callPopu==null || callPopuAsc==null ||topRated==null ) {
     return (
       <h2> Loading...</h2>
     )
@@ -145,13 +169,15 @@ useEffect(() => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
               <ButtonGroup className="mr-2" aria-label="First group">
-                <Button variant="info" ><Nav.Link href="#movies" style={{ color: "white", }}>Movies</Nav.Link></Button>{' '}
-                <Button variant="info" ><Nav.Link href="#tvshow" style={{ color: "white", }}>Top Rated</Nav.Link></Button>{' '}
+                {/* <Button variant="info" ><Nav.Link href="#movies" style={{ color: "white", }}>Movies</Nav.Link></Button>{' '} */}
+                <Button variant="info" ><Nav.Link href="#tvshow" style={{ color: "white", }} onClick={()=>{setHide(false); callTopRated()}} >Top Rated</Nav.Link></Button>{' '}
                 <Button variant="info" >
-                  <NavDropdown title="Sort By" id="collasible-nav-dropdown" >
-                    <NavDropdown.Item href="#action/3.1">Rate h-l</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.2">Rate l-h</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3" onClick={()=>setHide(false)} >Popularity h-l</NavDropdown.Item>
+                  <NavDropdown title="Popularity" id="collasible-nav-dropdown" >
+        
+                    
+                    <NavDropdown.Item href="#action/3.3" onClick={()=>{setHide(false); callPopuMovieDesc()}} >Popularity High-Low</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.3" onClick={() =>{setHide(false); callPopuMovieAsc()}} >Popularity Low-High</NavDropdown.Item>
+
                     {/* <NavDropdown.Item href="#action/3.4" onClick={()=> searchByPopularity("asc")} >Popularity l-h</NavDropdown.Item> */}
                   </NavDropdown>
                 </Button>{' '}
@@ -170,7 +196,7 @@ useEffect(() => {
         </Navbar>
 
 
-        <div hidden={!hide} >
+        <div hidden={!hide}>
           <Row style={{ width: "100%" }}>
             <Jumbotron >
               <h1 style={{ fontSize: '30px', paddingTop: "50px", }}>Welcome.</h1>
@@ -219,19 +245,28 @@ useEffect(() => {
           </Row>
 
         </div>
-        <Row style={{ width: "100%", marginBottom: "10px" }} >
+        <Row style={{ width: "100%", marginBottom: "10px" }} hidden={resultHide} >
           {/* <h3 className="title-style" hidden={hide}>Search results</h3> */}
-          <Button variant="outline-info" hidden={hide} style={{ color: "white", fontSize: "20px", fontWeight: "bolder", border: "1px solid white", marginBottom:"20px" }}>Search results</Button>
+          <Button variant="outline-info"  style={{ color: "white", fontSize: "20px", fontWeight: "bolder", border: "1px solid white", marginBottom:"20px" }}>Search results</Button>
         </Row>
         <Row style={{ width: "100%" }}>
           <ShowResults resultKeyWord={searchByKey} />
         </Row>
 
-
-        <Row hidden={hide}>
-        <PopularityList popularity={callPopu} setPageNumber={setPageNumber} />
+        <Row hidden={hide}>  
+        <PopularityList  popularity={callPopu} setPageNumber={setPageNumber} />
         </Row>
+
+        <Row hidden={hide}> 
+          <PopularListAsc popularityAsc={callPopuAsc} setPageNumber={setPageNumber}/>
+        </Row>
+        <Row hidden={hide}> 
+          <RatedListMovie ratedList={topRated} setValue={setValue} value={value} setPageNumber={setPageNumber}/>
+        </Row>
+
+
         
+      
 
       </Container>
 

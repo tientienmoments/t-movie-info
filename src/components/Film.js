@@ -29,7 +29,7 @@ export default function Film(props) {
         if (data.genres.length >0){
             setGenres(data.genres.map (item => <div className="badge badge-success m-2"> {item.name} </div>))
             
-        }
+        }   
 
         setRuntime(data.runtime)
         setHomePage(data.homepage)

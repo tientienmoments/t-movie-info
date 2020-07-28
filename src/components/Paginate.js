@@ -12,10 +12,10 @@ export default function Paginate(props) {
       };
     
     return (
-        // <div>
+        <div>
             <Pagination
              activePage={activePage}
-             itemsCountPerPage={20}
+             itemsCountPerPage={10}
              totalItemsCount={450}
              pageRangeDisplayed={10}
              onChange= {(pageNumber)=> handlePageChange(pageNumber)}
@@ -23,7 +23,7 @@ export default function Paginate(props) {
              linkClass="page-link"
             />
             
-        // </div>
+        </div>
     )
 }
 

@@ -38,6 +38,19 @@ width: 1117px;
   flex-wrap: wrap;
   justify-content: space-around;
   width: 1117px;
+  margin-bottom: 20px;
+}
+.board-style{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 1117px;
+  margin-bottom: 20px;
+  background-color: #29dfca50;
+  border-radius: 50px;
+  padding:20px;
+  border:1px solid white;
 }
 .title-style {
   align-items: flex-start !important ;
@@ -50,6 +63,7 @@ width: 1117px;
   transition: 0.5s ease-in;
   margin-right: 5px;
   margin-left: 5px;
+  margin-bottom: 5px;
   
 }
 
@@ -68,5 +82,28 @@ display: flex;
 flex-direction: column;
 overflow: scroll;
 height:150px;
+}
+.pagination .page-link{
+  background-color: #26afa1b7;
+  color: white;
+}
+.pagination .page-item.disabled .page-link{
+  background-color: #26afa1b7;
+  color: white;
+}
+.pagination .page-item.active .page-link {
+  background-color: #29dfc9;
+  color: black;
+  border: 1px solid white;
+}
+
+.rubber-slider{
+  width:300px;
+  color: rgba(255, 255, 255, 0.705);
+}
+.rubber-slider-input  .rubber-slider-handle {
+  pointer-events: all;
+  fill: #fff;
+  stroke: #98ecd0;
 }
 

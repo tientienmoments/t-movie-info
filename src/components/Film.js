@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Container, Col } from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 
 export default function Film(props) {

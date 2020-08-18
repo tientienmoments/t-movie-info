@@ -165,7 +165,7 @@ function App() {
 
 
 
-      <Navbar collapseOnSelect expand="lg" style={{ width: "100%", position: "fixed", zIndex: "6", backgroundColor: "#00C2A8", }}>
+      <Navbar collapseOnSelect expand="lg" style={{ width: "100%", position: "fixed", zIndex: "6", backgroundColor: "#00c2a8d8", }}>
         <Navbar.Brand href="#home" style={{ fontSize: "30px", color: "white", paddingLeft: "25px", }}>film.info</Navbar.Brand>
 
         <Row className="d-flex flex-driection-row" style={{ float: "right", width: "85%" }}>
@@ -175,7 +175,7 @@ function App() {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
               <ButtonGroup className="mr-2" aria-label="First group">
-                {/* <Button variant="info" ><Nav.Link href="#movies" style={{ color: "white", }}>Movies</Nav.Link></Button>{' '} */}
+
                 <Button variant="info" ><Nav.Link href="#tvshow" style={{ color: "white", }} onClick={() => { setHide([true, true, true, false]); callTopRated() }} >Top Rated</Nav.Link></Button>{' '}
                 <Button variant="info" >
                   <NavDropdown title="Popularity" id="collasible-nav-dropdown" >
@@ -208,7 +208,7 @@ function App() {
         <Jumbotron >
           <div style={{ position: "absolute", zIndex: "3" }}>
             {/* <video src={Video} preload="true" autoPlay="true" loop="loop" volume="1" laysinline="playsinline" className="video-style" /> */}
-            <iframe src="https://www.youtube.com/embed/JhlOh1T93oY?rel=0&autoplay=1" allow="accelerometer; autoplay ; encrypted-media; gyroscope; picture-in-picture" allowfullscreen className="video-style"></iframe>
+            <iframe src="https://www.youtube.com/embed/JhlOh1T93oY?rel=0&autoplay=1&loop=1&playlist=JhlOh1T93oY" allow="accelerometer; autoplay ; encrypted-media; gyroscope; picture-in-picture; loop" allowfullscreen className="video-style"></iframe>
           </div>
           <div style={{ position: "absolute", zIndex: "4" }}>
             <h1 style={{ fontSize: '30px', paddingTop: "50px", }}>Welcome.</h1>

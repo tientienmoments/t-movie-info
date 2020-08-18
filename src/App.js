@@ -6,6 +6,7 @@ import './App.css';
 import { Container, Row, } from 'react-bootstrap'
 import { Jumbotron, Button, InputGroup, FormControl, ButtonGroup } from 'react-bootstrap'
 import { Navbar, Nav, NavDropdown, } from 'react-bootstrap'
+import ReactPlayer from 'react-player/youtube'
 
 
 //individual
@@ -206,7 +207,8 @@ function App() {
 
         <Jumbotron >
           <div style={{ position: "absolute", zIndex: "3" }}>
-            <video src={Video} preload="true" autoPlay="true" loop="loop" volume="1" laysinline="playsinline" className="video-style" />
+            {/* <video src={Video} preload="true" autoPlay="true" loop="loop" volume="1" laysinline="playsinline" className="video-style" /> */}
+            <iframe src="https://www.youtube.com/embed/JhlOh1T93oY?rel=0&autoplay=1" allow="accelerometer; autoplay ; encrypted-media; gyroscope; picture-in-picture" allowfullscreen className="video-style"></iframe>
           </div>
           <div style={{ position: "absolute", zIndex: "4" }}>
             <h1 style={{ fontSize: '30px', paddingTop: "50px", }}>Welcome.</h1>

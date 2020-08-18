@@ -14,14 +14,19 @@
   color:white;
 }
 .jumbotron{
-  background: url('https://specials-images.forbesimg.com/imageserve/1130795690/960x0.jpg?fit=scale');
-  background-size: cover;
-  width: 100%;
-  height:400px;
+  /* background: url('https://specials-images.forbesimg.com/imageserve/1130795690/960x0.jpg?fit=scale');
+  background-size: cover; */
+  width: 100vw;
+  height:100vh;
   color:white;
   margin-bottom: 0px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
+.video-style{
+  width:100vw;
+}
 
 .row-style {
 display: flex;
@@ -29,8 +34,9 @@ flex-direction: row;
 /* margin-bottom: 40px; */
 overflow: scroll;
 height:355px;
-width: 1117px; 
- margin:5px;
+width: 100vw;
+margin-left:5px;
+margin:5px;
 }
 .film-style {
   display: flex;
@@ -81,7 +87,7 @@ width: 1117px;
 display: flex;
 flex-direction: column;
 overflow: scroll;
-height:150px;
+height:120px;
 }
 .pagination .page-link{
   background-color: #26afa1b7;

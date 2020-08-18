@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
+
 //Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 import { Container, Row, } from 'react-bootstrap'
 import { Jumbotron, Button, InputGroup, FormControl, ButtonGroup } from 'react-bootstrap'
 import { Navbar, Nav, NavDropdown, } from 'react-bootstrap'
@@ -16,25 +17,25 @@ import ShowResults from './components/ShowResults'
 import PopularityList from './components/PopularityList';
 import PopularListAsc from './components/PopularListAsc'
 import RatedListMovie from './components/RatedListMovie'
-
+import Video from "../src/Penguin.mp4"
 function App() {
-let [pageNumber,setPageNumber]=useState(1)
-let [hide, setHide] = useState([false, true, true, true])
-// let [hideAsc,setHideAsc]=useState(true)
-// let [hideDesc,setHideDesc]=useState(true)
-// let [hidePopuValue,setHidePopuValue] = useState(true)
+  let [pageNumber, setPageNumber] = useState(1)
+  let [hide, setHide] = useState([false, true, true, true])
+  // let [hideAsc,setHideAsc]=useState(true)
+  // let [hideDesc,setHideDesc]=useState(true)
+  // let [hidePopuValue,setHidePopuValue] = useState(true)
   let [nowList, setMovieList] = useState(null)
   let [popularList, setPopularList] = useState(null)
   let [trendingList, setTrendingList] = useState(null)
   let [searchByKey, setSearchByKey] = useState([])
   let [value, setValue] = useState(10)
-  let [callPopu,setCallPopu]=useState(null)
-  let [callPopuAsc,setCallPopuAsc]=useState(null)
-  let [resultHide,setResultHide]=useState(true)
+  let [callPopu, setCallPopu] = useState(null)
+  let [callPopuAsc, setCallPopuAsc] = useState(null)
+  let [resultHide, setResultHide] = useState(true)
   // let [popularityList,setPopularityList]=useState(null)
-  let [topRated,setTopRated]=useState(null)
-  
-  
+  let [topRated, setTopRated] = useState(null)
+
+
 
 
   const callMovieNowPlaying = async () => {
@@ -66,7 +67,7 @@ let [hide, setHide] = useState([false, true, true, true])
     setTrendingList(data.results)
   }
 
-  
+
 
   /////them chuc nang search key words
   const Search = () => {
@@ -90,59 +91,59 @@ let [hide, setHide] = useState([false, true, true, true])
     console.log(url)
     let result = await fetch(url)
     let data = await result.json()
-    console.log("data", data)
+    console.log("check search key word", data)
 
     setSearchByKey(data.results)
   }
 
-// list by popularity high to low
-const callPopuMovieDesc = async () => {
-  let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNumber}`
-  console.log(url)
-  let result = await fetch(url)
-  let data = await result.json()
-  console.log("data", data)
-  setCallPopu(data.results)
-  // setHide(true)
-  
-  // setHideAsc(true)
-}
-//list by popularity low to high
-const callPopuMovieAsc = async () => {
-  let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&sort_by=popularity.asc&include_adult=false&include_video=false&page=${pageNumber}`
-  console.log(url)
-  let result = await fetch(url)
-  let data = await result.json()
-  console.log("data", data)
-  setCallPopuAsc(data.results)
-  // setHide(true) 
-  
-  // setHideDesc(true)
-}
-//list by top rated
-const callTopRated = async()=>{
-  let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&include_adult=false&include_video=false&page=${pageNumber}&vote_average.gte=${value}`
-  console.log(url)
-  let result = await fetch(url)
-  let data = await result.json()
-  console.log("data", data)
-  setTopRated(data.results)
+  // list by popularity high to low
+  const callPopuMovieDesc = async () => {
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNumber}`
+    console.log(url)
+    let result = await fetch(url)
+    let data = await result.json()
+    console.log("data", data)
+    setCallPopu(data.results)
+    // setHide(true)
 
-  // setHide(true) 
-}
+    // setHideAsc(true)
+  }
+  //list by popularity low to high
+  const callPopuMovieAsc = async () => {
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&sort_by=popularity.asc&include_adult=false&include_video=false&page=${pageNumber}`
+    console.log(url)
+    let result = await fetch(url)
+    let data = await result.json()
+    console.log("data", data)
+    setCallPopuAsc(data.results)
+    // setHide(true) 
+
+    // setHideDesc(true)
+  }
+  //list by top rated
+  const callTopRated = async () => {
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&include_adult=false&include_video=false&page=${pageNumber}&vote_average.gte=${value}`
+    console.log(url)
+    let result = await fetch(url)
+    let data = await result.json()
+    console.log("data", data)
+    setTopRated(data.results)
+
+    // setHide(true) 
+  }
 
 
 
-useEffect(() => {
-  callPopuMovieAsc()
-  callPopuMovieDesc()
-  callTopRated()
+  useEffect(() => {
+    callPopuMovieAsc()
+    callPopuMovieDesc()
+    callTopRated()
 
-}, [pageNumber]);
+  }, [pageNumber]);
 
-useEffect(() => {
- callTopRated()
-}, [value])
+  useEffect(() => {
+    callTopRated()
+  }, [value])
   useEffect(() => {
     callMovieNowPlaying()
     callPopularMovie()
@@ -151,7 +152,7 @@ useEffect(() => {
     // callPopuMovieAsc()
   }, [])
 
-  if (nowList == null || popularList == null || trendingList == null || callPopu==null || callPopuAsc==null ||topRated==null ) {
+  if (nowList == null || popularList == null || trendingList == null || callPopu == null || callPopuAsc == null || topRated == null) {
     return (
       <h2> Loading...</h2>
     )
@@ -160,23 +161,27 @@ useEffect(() => {
 
   return (
     <div className="page-style">
-      <Container>
 
 
-        <Navbar collapseOnSelect expand="lg" style={{ width: "100%", position: "absolute", backgroundColor: "#00C2A8", }}>
-          <Navbar.Brand href="#home" style={{ fontSize: "30px", color: "white", paddingLeft: "25px", }}>film.info</Navbar.Brand>
+
+      <Navbar collapseOnSelect expand="lg" style={{ width: "100%", position: "fixed", zIndex: "6", backgroundColor: "#00C2A8", }}>
+        <Navbar.Brand href="#home" style={{ fontSize: "30px", color: "white", paddingLeft: "25px", }}>film.info</Navbar.Brand>
+
+        <Row className="d-flex flex-driection-row" style={{ float: "right", width: "85%" }}>
+
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
               <ButtonGroup className="mr-2" aria-label="First group">
                 {/* <Button variant="info" ><Nav.Link href="#movies" style={{ color: "white", }}>Movies</Nav.Link></Button>{' '} */}
-                <Button variant="info" ><Nav.Link href="#tvshow" style={{ color: "white", }} onClick={()=>{setHide([true, true, true, false]); callTopRated()}} >Top Rated</Nav.Link></Button>{' '}
+                <Button variant="info" ><Nav.Link href="#tvshow" style={{ color: "white", }} onClick={() => { setHide([true, true, true, false]); callTopRated() }} >Top Rated</Nav.Link></Button>{' '}
                 <Button variant="info" >
                   <NavDropdown title="Popularity" id="collasible-nav-dropdown" >
-        
-                    
-                    <NavDropdown.Item href="#action/3.3" onClick={()=>{setHide([true,false,true,true]); callPopuMovieDesc()}} >Popularity High-Low</NavDropdown.Item>
-                    <NavDropdown.Item href="#action/3.3" onClick={() =>{setHide([true,true,false,true]); callPopuMovieAsc()}} >Popularity Low-High</NavDropdown.Item>
+
+
+                    <NavDropdown.Item href="#action/3.3" onClick={() => { setHide([true, false, true, true]); callPopuMovieDesc() }} >Popularity High-Low</NavDropdown.Item>
+                    <NavDropdown.Item href="#action/3.3" onClick={() => { setHide([true, true, false, true]); callPopuMovieAsc() }} >Popularity Low-High</NavDropdown.Item>
 
                     {/* <NavDropdown.Item href="#action/3.4" onClick={()=> searchByPopularity("asc")} >Popularity l-h</NavDropdown.Item> */}
                   </NavDropdown>
@@ -184,7 +189,7 @@ useEffect(() => {
 
               </ButtonGroup>
             </Nav>
-            <Nav style={{ paddingRight: "173px", }}>
+            <Nav>
               <ButtonGroup >
                 <Button variant="info"><Nav.Link href="#deets" style={{ color: "white", }}>Login</Nav.Link></Button>{' '}
                 <Button variant="info"><Nav.Link href="#pricing" style={{ color: "white", }}>About Us</Nav.Link></Button>{' '}
@@ -193,86 +198,92 @@ useEffect(() => {
             </Nav>
 
           </Navbar.Collapse>
-        </Navbar>
+        </Row>
+      </Navbar>
 
 
-        <div hidden={hide[0]}>
-          <Row style={{ width: "100%" }}>
-            <Jumbotron >
-              <h1 style={{ fontSize: '30px', paddingTop: "50px", }}>Welcome.</h1>
-              <p style={{ fontSize: '20px', }}>
-                Millions of movies, TV shows and people to discover. Explore now.
+      <div hidden={hide[0]}>
+
+        <Jumbotron >
+          <div style={{ position: "absolute", zIndex: "3" }}>
+            <video src={Video} preload="true" autoPlay="true" loop="loop" volume="1" laysinline="playsinline" className="video-style" />
+          </div>
+          <div style={{ position: "absolute", zIndex: "4" }}>
+            <h1 style={{ fontSize: '30px', paddingTop: "50px", }}>Welcome.</h1>
+            <p style={{ fontSize: '20px', }}>
+              Millions of movies, TV shows and people to discover. Explore now.
             </p>
-              <p>
-                <InputGroup className="mb-3">
-                  <FormControl
-                    placeholder="movies"
+            <p>
+              <InputGroup className="mb-3">
+                <FormControl
+                  placeholder="movies"
 
-                    type="text" name="name" id="input"
-                  />
-                  <InputGroup.Append className='search-style'>
-                    <Button variant="info" onClick={Search}>Search</Button>
+                  type="text" name="name" id="input"
+                />
+                <InputGroup.Append className='search-style'>
+                  <Button variant="info" onClick={Search}>Search</Button>
 
 
-                  </InputGroup.Append>
-                </InputGroup>
-              </p>
-            </Jumbotron>
-          </Row>
+                </InputGroup.Append>
+              </InputGroup>
+            </p>
+          </div>
+        </Jumbotron>
 
-          <Row style={{ width: "100%", marginBottom: "20px", marginTop:"20px" }}>
 
-            <Button variant="outline-info" style={{ color: "white", fontSize: "20px", fontWeight: "bolder", border: "1px solid white",marginBottom:"10px", }}>Now Playing</Button>
-          </Row>
+        <Row style={{ marginLeft: "30px", marginBottom: "20px", marginTop: "20px" }}>
 
-          <Row style={{ width: "100%", }}>
-            <NowPlaying nowPlaying={nowList} />
-          </Row>
-          <Row style={{ width: "100%", marginBottom: "10px" }}>
-
-            <Button variant="outline-info" style={{ color: "white", fontSize: "20px", fontWeight: "bolder", border: "1px solid white", marginBottom:"20px" }}>Popular</Button>
-          </Row>
-
-          <Row style={{ width: "100%" }}>
-            <Popular popular={popularList} />
-          </Row>
-          <Row style={{ width: "100%", marginBottom: "10px" }}>
-            <Button variant="outline-info" style={{ color: "white", fontSize: "20px", fontWeight: "bolder", border: "1px solid white", marginBottom:"20px", }}>Today's Trending </Button>
-
-          </Row>
-          <Row style={{ width: "100%" }}>
-            <Trending trending={trendingList} />
-          </Row>
-
-        </div>
-        <Row style={{ width: "100%", marginBottom: "10px" }} hidden={resultHide} >
-          {/* <h3 className="title-style" hidden={hide}>Search results</h3> */}
-          <Button variant="outline-info"  style={{ color: "white", fontSize: "20px", fontWeight: "bolder", border: "1px solid white", marginBottom:"20px" }}>Search results</Button>
-        </Row>
-        <Row style={{ width: "100%" }}>
-          <ShowResults resultKeyWord={searchByKey} />
+          <Button variant="outline-info" style={{ color: "white", fontSize: "20px", fontWeight: "bolder", border: "1px solid white", marginBottom: "10px", }}>Now Playing</Button>
         </Row>
 
-        <Row hidden={hide[1]}>  
-        <PopularityList  popularity={callPopu} setPageNumber={setPageNumber} />
+        <Row style={{ margin: "10px" }}>
+          <NowPlaying nowPlaying={nowList} />
+        </Row>
+        <Row style={{ marginLeft: "30px", marginBottom: "20px", marginTop: "20px" }}>
+
+          <Button variant="outline-info" style={{ color: "white", fontSize: "20px", fontWeight: "bolder", border: "1px solid white", marginBottom: "20px" }}>Popular</Button>
         </Row>
 
-        <Row hidden={hide[2]}> 
-          <PopularListAsc popularityAsc={callPopuAsc} setPageNumber={setPageNumber}/>
+        <Row style={{ margin: "10px" }}>
+          <Popular popular={popularList} />
         </Row>
-        <Row hidden={hide[3]}> 
-          <RatedListMovie ratedList={topRated} setValue={setValue} value={value} setPageNumber={setPageNumber}/>
+        <Row style={{ marginLeft: "30px", marginBottom: "20px", marginTop: "20px" }}>
+          <Button variant="outline-info" style={{ color: "white", fontSize: "20px", fontWeight: "bolder", border: "1px solid white", marginBottom: "20px", }}>Today's Trending </Button>
+
+        </Row>
+        <Row style={{ margin: "10px" }}>
+          <Trending trending={trendingList} />
         </Row>
 
+      </div>
+      <Row style={{ width: "100%", marginBottom: "10px" }} hidden={resultHide} >
+        {/* <h3 className="title-style" hidden={hide}>Search results</h3> */}
+        <Button variant="outline-info" style={{ color: "white", fontSize: "20px", fontWeight: "bolder", border: "1px solid white", marginBottom: "20px" }}>Search results</Button>
+      </Row>
+      <Row style={{ width: "100%" }}>
+        <ShowResults resultKeyWord={searchByKey} />
+      </Row>
 
-        
-      
+      <Row hidden={hide[1]}>
+        <PopularityList popularity={callPopu} setPageNumber={setPageNumber} />
+      </Row>
 
-      </Container>
+      <Row hidden={hide[2]}>
+        <PopularListAsc popularityAsc={callPopuAsc} setPageNumber={setPageNumber} />
+      </Row>
+      <Row hidden={hide[3]}>
+        <RatedListMovie ratedList={topRated} setValue={setValue} value={value} setPageNumber={setPageNumber} />
+      </Row>
 
 
 
-    </div>
+
+
+
+
+
+
+    </div >
   );
 }
 

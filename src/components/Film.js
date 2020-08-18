@@ -12,32 +12,35 @@ export default function Film(props) {
     const hideInfo = () => {
         setIsHover(false)
     }
-    let [genres, setGenres]=useState(null)
-    let [runtime,setRuntime]=useState(null)
-    let [homepage,setHomePage]=useState(null)
-    
-    
+    let [genres, setGenres] = useState(null)
+    let [runtime, setRuntime] = useState(null)
+    let [homepage, setHomePage] = useState(null)
+
+
     const callApiGetVideo = async () => {
-        let url = `https://api.themoviedb.org/3/movie/${props.movie.id}?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&append_to_response=videos`
+        // let url = `https://api.themoviedb.org/3/movie/${props.movie.id}?api_key=0fe0cfcc2a26aafa851117e003638b00&language=en-US&append_to_response=videos`
+        //https://api.themoviedb.org/3/movie/157336?api_key={api_key}&append_to_response=videos
+        let url = `https://api.themoviedb.org/3/movie/${props.movie.id}?api_key=0fe0cfcc2a26aafa851117e003638b00&append_to_response=videos`
         let respone = await fetch(url)
         let data = await respone.json()
-        console.log('data:', data)
-        if (data.videos.results.length > 0) {
-            setYoutubeLink(`https://www.youtube.com/embed/${data.videos.results[0].key}`)
+        console.log('check data film:', data)
 
-            
+        if (data.videos.results.length === 0) {
+            console.log("test film", data)
+        } else {
+            setYoutubeLink(`https://www.youtube.com/embed/${data.videos.results[0].key}`)
         }
-        
-        if (data.genres.length >0){
-            setGenres(data.genres.map (item => <div className="badge badge-success m-2"> {item.name} </div>))
-            
-        }   
+
+        if (data.genres.length > 0) {
+            setGenres(data.genres.map(item => <div className="badge badge-success m-2"> {item.name} </div>))
+
+        }
 
         setRuntime(data.runtime)
         setHomePage(data.homepage)
-        
+
     }
-    
+
 
     useEffect(() => {
         callApiGetVideo()
@@ -55,35 +58,35 @@ export default function Film(props) {
                     onHide={() => setShow(false)}
                     dialogClassName="modal-xl"
                     aria-labelledby="example-custom-modal-styling-title"
-                    style={{borderRadius:"15px"}}
+                    style={{ borderRadius: "15px" }}
                 >
                     <Modal.Header closeButton style={{ backgroundImage: "linear-gradient(to right, #39a975, #34b389, #32bc9d, #34c6b1, #3bcfc4)", }}>
                         <Modal.Title style={{ color: "white" }} id="example-custom-modal-styling-title">
                             {props.movie.title}
                         </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body style={{ heigt: "600px", backgroundColor:"#cefbe3" }}>
-                        <Container>
-                            <Row>
-                                <Col>
-                                
+                    <Modal.Body style={{ heigt: "600px", backgroundColor: "#cefbe3" }}>
+
+                        <Row>
+                            <Col sm={6}>
+
                                 <iframe width="520" height="315" src={youtubeLink} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                
-                                </Col>
-                                <Col>
-                                    <span style={{fontWeight:"bolder", fontSize:"20px", textDecoration:"underline"}}>The Synopsis:</span><br></br>
-                                    <span style={{fontSize:"20px"}}>{props.movie.overview}</span><br></br>
-                                    <span style={{fontWeight:"bolder", fontSize:"20px",textDecoration:"underline"}}>Release date:</span><br></br>
-                                    <span style={{fontSize:"20px"}}>{props.movie.release_date}</span><br></br>
-                                    <span style={{fontWeight:"bolder", fontSize:"20px",textDecoration:"underline"}}>Genres:</span><br></br>
-                                    <span style={{fontSize:"20px"}}>{genres}</span><br></br> 
-                                    <span style={{fontWeight:"bolder",fontSize:"20px",textDecoration:"underline"}}>Run Time:</span><br></br> 
-                                    <span style={{fontSize:"20px"}}>{runtime} minutes</span><br></br>
-                                    <span style={{fontWeight:"bolder",fontSize:"20px",textDecoration:"underline"}}>Website:</span><br></br> 
-                                    <a href={homepage} ><span>{props.movie.title}</span></a>
-                                </Col>
-                            </Row>
-                        </Container>
+
+                            </Col>
+                            <Col sm={6}>
+                                <span style={{ fontWeight: "bolder", fontSize: "20px", textDecoration: "underline" }}>The Synopsis:</span><br></br>
+                                <span style={{ fontSize: "20px" }}>{props.movie.overview}</span><br></br>
+                                <span style={{ fontWeight: "bolder", fontSize: "20px", textDecoration: "underline" }}>Release date:</span><br></br>
+                                <span style={{ fontSize: "20px" }}>{props.movie.release_date}</span><br></br>
+                                <span style={{ fontWeight: "bolder", fontSize: "20px", textDecoration: "underline" }}>Genres:</span><br></br>
+                                <span style={{ fontSize: "20px" }}>{genres}</span><br></br>
+                                <span style={{ fontWeight: "bolder", fontSize: "20px", textDecoration: "underline" }}>Run Time:</span><br></br>
+                                <span style={{ fontSize: "20px" }}>{runtime} minutes</span><br></br>
+                                <span style={{ fontWeight: "bolder", fontSize: "20px", textDecoration: "underline" }}>Website:</span><br></br>
+                                <a href={homepage} ><span>{props.movie.title}</span></a>
+                            </Col>
+                        </Row>
+
 
 
 
